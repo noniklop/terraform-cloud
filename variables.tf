@@ -7,19 +7,19 @@ variable "vpc_name" {
 variable "subnet1_name" {
   type        = string
   description = "Name of subnet1"
-  default     = " cmtr-4ca2aaf4-01-subnet-public-a"
+  default     = "cmtr-4ca2aaf4-01-subnet-public-a"
 }
 
 variable "subnet2_name" {
   type        = string
   description = "Name of subnet2"
-  default     = " cmtr-4ca2aaf4-01-subnet-public-b"
+  default     = "cmtr-4ca2aaf4-01-subnet-public-b"
 }
 
 variable "subnet3_name" {
   type        = string
   description = "Name of subnet3"
-  default     = " cmtr-4ca2aaf4-01-subnet-public-c"
+  default     = "cmtr-4ca2aaf4-01-subnet-public-c"
 }
 
 variable "subnet1_az" {
