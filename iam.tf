@@ -11,7 +11,7 @@ data "template_file" "policy" {
 }
 
 resource "aws_iam_policy" "custom_policy" {
-  name   = "CustomWritePolicy"
+  name   = "cmtr-4ca2aaf4-iam-policy"
   policy = data.template_file.policy.rendered
 
   tags = {
