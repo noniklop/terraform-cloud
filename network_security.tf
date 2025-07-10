@@ -57,7 +57,7 @@ resource "aws_security_group_rule" "what" {
   from_port         = 0
   to_port           = 65535
   protocol          = "tcp"
-  cidr_blocks       = "10.1.1.0/24"
+  cidr_blocks       = ["10.1.1.0/24"]
   security_group_id = [aws_security_group.public_sg.id]
 }
 
