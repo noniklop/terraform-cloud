@@ -58,7 +58,7 @@ resource "aws_network_interface_sg_attachment" "public_instance_ssh" {
 }
 
 resource "aws_network_interface_sg_attachment" "public_instance_http" {
-  security_group_id    = aws_security_group.public_sg
+  security_group_id    = aws_security_group.public_sg.id
   network_interface_id = "eni-011e42be3e11a598c"
 }
 
