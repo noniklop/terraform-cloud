@@ -1,5 +1,6 @@
 resource "aws_security_group" "ssh_sg" {
-  name = "cmtr-4ca2aaf4-ssh-sg"
+  name   = "cmtr-4ca2aaf4-ssh-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 22
@@ -17,7 +18,8 @@ resource "aws_security_group" "ssh_sg" {
 }
 
 resource "aws_security_group" "public_sg" {
-  name = "cmtr-4ca2aaf4-public-http-sg"
+  name   = "cmtr-4ca2aaf4-public-http-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -35,7 +37,8 @@ resource "aws_security_group" "public_sg" {
 }
 
 resource "aws_security_group" "private_sg" {
-  name = "cmtr-4ca2aaf4-private-http-sg"
+  name   = "cmtr-4ca2aaf4-private-http-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port       = 8080
