@@ -8,7 +8,7 @@ resource "aws_vpc" "my_vpc" {
 resource "aws_subnet" "subnet_1" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.10.1.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = "us-east-1a"
   tags = {
     Name = "cmtr-4ca2aaf4-01-subnet-public-a"
   }
@@ -17,7 +17,7 @@ resource "aws_subnet" "subnet_1" {
 resource "aws_subnet" "subnet_2" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.10.3.0/24"
-  availability_zone = "eu-west-1b"
+  availability_zone = "us-east-1b"
   tags = {
     Name = "cmtr-4ca2aaf4-01-subnet-public-b"
   }
@@ -26,7 +26,7 @@ resource "aws_subnet" "subnet_2" {
 resource "aws_subnet" "subnet_3" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.10.5.0/24"
-  availability_zone = "eu-west-1c"
+  availability_zone = "us-east-1c"
   tags = {
     Name = "cmtr-4ca2aaf4-01-subnet-public-с"
   }
