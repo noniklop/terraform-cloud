@@ -14,7 +14,7 @@ output "public_subnet_cidr_block" {
   value = [aws_subnet.subnet_1.cidr_block, aws_subnet.subnet_2.cidr_block, aws_subnet.subnet_3.cidr_block]
 }
 
-output "public_subnet_availability_zones" {
+output "public_subnet_availability_zone" {
   value = [
     aws_subnet.subnet_1.availability_zone,
     aws_subnet.subnet_2.availability_zone,
