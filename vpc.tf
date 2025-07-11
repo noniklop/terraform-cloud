@@ -1,78 +1,69 @@
-resource "aws_vpc" "vpc_01" {
-  cidr_block           = "10.10.0.0/16"
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-
+resource "aws_vpc" "my_vpc" {
+  cidr_block = "10.10.0.0/16"
   tags = {
     Name = var.vpc_name
   }
 }
 
 resource "aws_subnet" "subnet_1" {
-  vpc_id                  = aws_vpc.vpc_01.id
-  cidr_block              = "10.10.1.0/24"
-  availability_zone       = var.subnet1_az
-  map_public_ip_on_launch = true
-
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.10.1.0/24"
+  availability_zone = "eu-west-1a"
   tags = {
-    Name = var.subnet1_name
+    Name = "cmtr-4ca2aaf4-01-subnet-public-a"
   }
 }
 
 resource "aws_subnet" "subnet_2" {
-  vpc_id                  = aws_vpc.vpc_01.id
-  cidr_block              = "10.10.3.0/24"
-  availability_zone       = var.subnet2_az
-  map_public_ip_on_launch = true
-
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.10.3.0/24"
+  availability_zone = "eu-west-1b"
   tags = {
-    Name = var.subnet2_name
+    Name = "cmtr-4ca2aaf4-01-subnet-public-b"
   }
 }
 
 resource "aws_subnet" "subnet_3" {
-  vpc_id                  = aws_vpc.vpc_01.id
-  cidr_block              = "10.10.5.0/24"
-  availability_zone       = var.subnet3_az
-  map_public_ip_on_launch = true
-
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.10.5.0/24"
+  availability_zone = "eu-west-1c"
   tags = {
-    Name = var.subnet3_name
+    Name = "cmtr-4ca2aaf4-01-subnet-public-b"
   }
 }
 
-resource "aws_internet_gateway" "igw_01" {
-  vpc_id = aws_vpc.vpc_01.id
+resource "aws_internet_gateway" "my_igw" {
+  vpc_id = aws_vpc.my_vpc.id
 
   tags = {
-    Name = var.igw_name
+    Name = "cmtr-4ca2aaf4-01-igw"
   }
 }
 
-resource "aws_route_table" "route_table_01" {
-  vpc_id = aws_vpc.vpc_01.id
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.my_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw_01.id
+    gateway_id = aws_internet_gateway.my_igw.id
   }
 
   tags = {
-    Name = var.route_table_name
+    Name = "cmtr-4ca2aaf4-01-rt"
   }
 }
 
-resource "aws_route_table_association" "subnet_1_assoc" {
+resource "aws_route_table_association" "subnet_1" {
   subnet_id      = aws_subnet.subnet_1.id
-  route_table_id = aws_route_table.route_table_01.id
+  route_table_id = aws_route_table.public.id
 }
 
-resource "aws_route_table_association" "subnet_2_assoc" {
+resource "aws_route_table_association" "subnet_2" {
   subnet_id      = aws_subnet.subnet_2.id
-  route_table_id = aws_route_table.route_table_01.id
+  route_table_id = aws_route_table.public.id
 }
 
-resource "aws_route_table_association" "subnet_3_assoc" {
+resource "aws_route_table_association" "subnet_3" {
   subnet_id      = aws_subnet.subnet_3.id
-  route_table_id = aws_route_table.route_table_01.id
+  route_table_id = aws_route_table.public.id
 }
