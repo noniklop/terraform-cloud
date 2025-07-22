@@ -7,5 +7,5 @@ variable "ssh_key_name" {
 variable "subnet_id" {
   description = "subnet id"
   type        = list(any)
-  default     = ["subnet-0074fe3ff8892d82b", "subnet-046c487cec2077762"]
+  default     = ["subnet-01ca054bfb0f898e0", "subnet-0ee5963661542ccdd"]
 }
