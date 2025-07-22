@@ -5,38 +5,30 @@ resource "aws_launch_template" "cmtr_4ca2aaf4_template" {
 
   key_name = var.ssh_key_name
 
+  image_id = "ami-0ca351c241d836d3b"
+
   iam_instance_profile {
     name = "cmtr-4ca2aaf4-instance_profile"
   }
 
   network_interfaces {
+    security_groups       = ["sg-01002f52cab6d56b0", "sg-0c8d0b9a38f287ec3"]
     delete_on_termination = true
   }
 
-  security_group_names = [
-    "cmtr-4ca2aaf4-ec2_sg",
-    "cmtr-4ca2aaf4-http_sg"
-  ]
 
-  user_data = <<-EOT
+
+  user_data = base64encode(<<EOT
 #!/bin/bash
-
-# === Update system packages ===
 yum update -y
-
-# === Install necessary utilities ===
 yum install -y aws-cli httpd jq
-
-# === Enable and start web server (httpd) ===
 systemctl enable httpd
 systemctl start httpd
 
-# === Retrieve instance metadata using IMDSv2 ===
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
 PRIVATE_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/local-ipv4)
 
-# === Create HTML file with instance information ===
 cat <<EOF > /var/www/html/index.html
 <!DOCTYPE html>
 <html lang="en">
@@ -52,10 +44,9 @@ cat <<EOF > /var/www/html/index.html
 </html>
 EOF
 
-# === Restart the httpd service to load the new index.html ===
 systemctl restart httpd
 EOT
-
+  )
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "optional"
@@ -72,6 +63,7 @@ resource "aws_autoscaling_group" "cmtr_4ca2aaf4_asg" {
   desired_capacity = 2
   min_size         = 1
   max_size         = 2
+
 
   launch_template {
     id      = aws_launch_template.cmtr_4ca2aaf4_template.id
@@ -92,7 +84,7 @@ resource "aws_autoscaling_group" "cmtr_4ca2aaf4_asg" {
 
 variable "alb_sg" {
   description = "Security group for ALB"
-  default     = "cmtr-4ca2aaf4-sglb" # Задайте ім'я SG для ALB
+  default     = "sg-06c907ec7736a4835" # Задайте ім'я SG для ALB
 
 
 }
@@ -136,7 +128,7 @@ resource "aws_lb_target_group" "cmtr_4ca2aaf4_tg" {
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
-  vpc_id      = "vpc-04ef3e68171093c48"
+  vpc_id      = "vpc-039c8a3a30d4afdd9"
 
   health_check {
     interval            = 30
