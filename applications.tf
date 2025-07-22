@@ -39,7 +39,7 @@ cat <<EOF > /var/www/html/index.html
 </head>
 <body>
     <h1>Welcome to your web server!</h1>
-    <p>This message was generated on instance <b>$INSTANCE_ID</b> with the following IP: <b>$PRIVATE_IP</b></p>
+    <p>This message was generated on instance </p>
 </body>
 </html>
 EOF
