@@ -12,7 +12,7 @@ resource "aws_launch_template" "cmtr_4ca2aaf4_template" {
   }
 
   network_interfaces {
-    security_groups       = ["sg-01002f52cab6d56b0", "sg-0c8d0b9a38f287ec3"]
+    security_groups       = ["sg-0c7497fa8645afb5a", "sg-03881cfdd1159dd16"]
     delete_on_termination = true
   }
 
@@ -84,7 +84,7 @@ resource "aws_autoscaling_group" "cmtr_4ca2aaf4_asg" {
 
 variable "alb_sg" {
   description = "Security group for ALB"
-  default     = "sg-06c907ec7736a4835" # Задайте ім'я SG для ALB
+  default     = "sg-0d154927311315b04" # Задайте ім'я SG для ALB
 
 
 }
@@ -128,7 +128,7 @@ resource "aws_lb_target_group" "cmtr_4ca2aaf4_tg" {
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
-  vpc_id      = "vpc-039c8a3a30d4afdd9"
+  vpc_id      = "vpc-09edeb69e67d9cbd8"
 
   health_check {
     interval            = 30
