@@ -8,5 +8,6 @@ resource "aws_instance" "cmtr-4ca2aaf4-instance" {
   tags = {
     Terraform = "true"
     Project   = "cmtr-4ca2aaf4"
+    Name      = "cmtr-4ca2aaf4-instance"
   }
 }
