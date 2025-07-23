@@ -10,14 +10,20 @@ variable "project_id" {
   default     = "cmtr-4ca2aaf4"
 }
 
-variable "state_bucket" {
-  description = "state bucket"
+variable "vpc_name" {
+  description = "vpc name"
   type        = string
-  default     = "cmtr-4ca2aaf4-tf-state-1753102282"
+  default     = "cmtr-4ca2aaf4-vpc"
 }
 
-variable "state_key" {
-  description = "state bucket"
+variable "public_subnet_name" {
+  description = "public subnet name"
   type        = string
-  default     = "infra.tfstate"
+  default     = "cmtr-4ca2aaf4-public-subnet-1"
+}
+
+variable "security_group_name" {
+  description = "security group name"
+  type        = string
+  default     = "cmtr-4ca2aaf4-sg"
 }
