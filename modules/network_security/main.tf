@@ -3,12 +3,15 @@ resource "aws_security_group" "ssh_sg" {
   description = "Security Group for SSH access"
   vpc_id      = var.vpc_id
 
-  ingress {
-    description = "Allow SSH from allowed_ip_range"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.allowed_ip_range]
+  dynamic "ingress" {
+    for_each = var.allowed_ip_range
+    content {
+      description = "Allow SSH from allowed_ip_range"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+    }
   }
 
   egress {
@@ -29,12 +32,15 @@ resource "aws_security_group" "public_http_sg" {
   description = "Security Group for Public HTTP access"
   vpc_id      = var.vpc_id
 
-  ingress {
-    description = "Allow HTTP from allowed_ip_range"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = [var.allowed_ip_range]
+  dynamic "ingress" {
+    for_each = var.allowed_ip_range
+    content {
+      description = "Allow HTTP from allowed_ip_range"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+    }
   }
 
   egress {
