@@ -1,4 +1,4 @@
-module "vpc" {
+module "network" {
   source = "./modules/network"
 }
 
