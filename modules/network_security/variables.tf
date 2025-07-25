@@ -11,6 +11,6 @@ variable "vpc_id" {
 
 variable "allowed_ip_range" {
   description = "CIDR block or range of IPs allowed to access the security groups"
-  type        = string
-  default     = "10.10.0.0/16"
+  type        = list(string)
+  default     = ["18.153.146.156/32", "188.163.9.79/32"]
 }
