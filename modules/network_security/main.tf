@@ -32,15 +32,12 @@ resource "aws_security_group" "public_http_sg" {
   description = "Security Group for Public HTTP access"
   vpc_id      = var.vpc_id
 
-  dynamic "ingress" {
-    for_each = var.allowed_ip_range
-    content {
-      description = "Allow HTTP from allowed_ip_range"
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_blocks = [ingress.value]
-    }
+  ingress {
+    description     = "Allow HTTP traffic from Public HTTP Security Group"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.public_http_sg.id]
   }
 
   egress {
@@ -61,13 +58,24 @@ resource "aws_security_group" "private_http_sg" {
   description = "Security Group for Private HTTP access"
   vpc_id      = var.vpc_id
 
-  ingress {
-    description     = "Allow HTTP traffic from Public HTTP Security Group"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.public_http_sg.id]
+  dynamic "ingress" {
+    for_each = var.allowed_ip_range
+    content {
+      description = "Allow HTTP from allowed_ip_range"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+    }
   }
+
+  # ingress {
+  #   description     = "Allow HTTP traffic from Public HTTP Security Group"
+  #   from_port       = 80
+  #   to_port         = 80
+  #   protocol        = "tcp"
+  #   security_groups = [aws_security_group.public_http_sg.id]
+  # }
 
   egress {
     description = "Allow all outbound traffic"
