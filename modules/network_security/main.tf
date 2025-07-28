@@ -37,7 +37,7 @@ resource "aws_security_group" "public_http_sg" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group.public_http_sg.id]
+    security_groups = [aws_security_group.private_http_sg.id]
   }
 
   egress {
