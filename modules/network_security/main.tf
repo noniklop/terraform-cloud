@@ -63,8 +63,8 @@ resource "aws_security_group" "private_http_sg" {
 
   ingress {
     description     = "Allow HTTP traffic from Public HTTP Security Group"
-    from_port       = 8080
-    to_port         = 8080
+    from_port       = 80
+    to_port         = 80
     protocol        = "tcp"
     security_groups = [aws_security_group.public_http_sg.id]
   }
